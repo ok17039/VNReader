@@ -20,5 +20,3 @@ public class EvEnd extends Event {
     }
     
 }
-
-# CAUSING MISCHIEF HERE VERY BAD
