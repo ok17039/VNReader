@@ -1,0 +1,88 @@
+{
+Medic
+rh_medic/default.png
+
+Heavily-Armed Man
+rh_operator/default.png
+
+Guard
+rh_operator/default.png
+
+Reunion Member
+ru_caster/default.png
+}
+
+<b>Background-Wildlands.png
+
+<c>Medic
+"c" tag sets the actor of the next lines.
+
+<c>Amiya
+Every actor is added to the scene and stays...
+
+<c><remove>Medic
+
+<c>Amiya
+Unless removed using the "c" tag with a "remove" attribute.
+
+<c><peek>Heavily-Armed Man
+Actors can appear only once with the "peek" attribute...
+
+<c>Amiya
+Like so.
+
+<c><ghost>Guard
+Or can just speak without appearing with the "ghost" attribute.
+
+<c>???
+Actors will be displayed if they were set up either in the "info.txt" file or at the start of the chapter.
+
+<c>Heavily-Armed Man
+And finally,
+
+<c>Medic
+they are able to...
+
+<c><solo>Reunion Member
+Speak alone (with the "solo" attribute) without having to delete everyone else.
+
+<c>Medic
+The maximum number of characters on screen is 4...
+
+<c>Guard
+Old ones will be removed when adding a 5th one.
+
+<c><remove>Reunion Member
+
+<c><remove>Medic
+
+<c><remove>Guard
+
+<c><remove>Heavily-Armed Man
+
+<c>Amiya
+Backgrounds can be changed using the "b" tag...
+
+<b>Background-Chernobog_Indoor.png
+
+<c>Amiya
+like this.
+
+<i>The_Giant_of_Babel.png
+
+<c>Amiya
+Images covering the characters can be shown using the "i" tag.
+
+<b>black
+
+<c>Amiya
+And are interrupted by setting a background.
+"Black" and "white" keywords can be used for backgrounds without having a pure black/white image.
+
+<nar>
+Narration can be made using the "nar" tag.
+
+<c>Amiya
+Ending the chapter is done using a "end" tag.
+
+<end>

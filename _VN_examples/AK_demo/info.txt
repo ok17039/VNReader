@@ -1,0 +1,7 @@
+title: Arknights demo
+writer: Hyperglyph (edited)
+illust: Hyperglyph
+start: 0-0.txt
+
+Amiya
+rh_leader/default.png

@@ -1,0 +1,337 @@
+{
+Medic
+rh_medic/default.png
+
+Heavily-Armed Man
+rh_operator/default.png
+
+Guard
+rh_operator/default.png
+
+Reunion Member
+ru_caster/default.png
+}
+
+<c>
+Ah, it's you.
+
+<i>The_Giant_of_Babel.png
+
+<c>
+It's been a long time since we've last seen each other.
+During this time... you've been teetering on the edge of a cliff.
+You may have forgotten who you are, but just remembering your name is enough.
+...It's time. Don't linger here for too long.
+After all, you aren't my guest yet, nor should you even be here.
+She still needs you.
+December 23rd.
+You may not remember what this date means to you.
+And this will thrust you into peril.
+
+<b>black
+
+<c>
+...
+No...
+You must try to remember.
+
+<i>Awake.png
+
+<nar>
+An EKG beeps in the background as the sound of heartbeat is heard.
+
+<c>Distant Voice
+...consciousness...
+Circulation resumed... vitals stabilized... cardioplegia solution injected...
+
+<nar>
+The EKG beeps flatly...
+
+<c>Distant Voice
+Body temperature low... administering Hexamethasone 20 c.c., now...
+
+<nar>
+...before beeping normally again.
+
+<c>Distant Voice
+Get the hemostat!
+...Conditions stable... beginning resection... be careful of VFib...
+...Sorry...
+For making you suffer again...
+
+<nar>
+The sound of an injection is heard as the vision blacks out.
+
+<b>black
+
+<c>???
+...
+Doctor...
+...hand!
+Take my...
+Take my hand!!
+
+<i>Amiya_Awakening_Blurred.png
+
+{}
+
+<i>Amiya_Awakening.png
+
+<c>???
+...
+Emergency...
+...Help...
+...It's done...!
+
+<b>black
+
+<c>???
+Doctor, Doctor!
+Medic, how's Doctor doing?
+But, just a moment ago... we were holding hands...
+So why... why is Doctor still not waking up...?
+
+<c>Medic
+Amiya! Don't panic, just calm down first!
+
+<c>Amiya
+Ah... S-sorry.
+
+<c>Medic
+You always get so flustered when it comes to the doctor.
+But, Amiya, if the worst came to pass... what would you do then?
+
+<c>Amiya
+...I'm already mentally prepared for that. We would continue to follow the plan.
+
+<c>Medic
+...I understand. Anyway, I'll do what you requested.
+
+<c>Amiya
+All right... I appreciate it.
+About the Doctor...
+
+<c>Medic
+Don't worry, Amiya. All the vital signs are stable now.
+I'll do one more inspection, just for you.
+
+<c>Amiya
+Thank you... Thank you very much!
+
+<c><remove>Amiya
+
+<c>Medic
+Mhm. Breathing is slightly shallow, but blood pressure is normal. There should be no cause for concern.
+
+<b>Background-Chernobog_Indoor.png
+
+<nar>
+The person, who were only known as the Doctor, wakes up.
+
+<c>Amiya
+...!
+
+<c>Medic
+...
+Are you awake?
+Amiya, it's a success! The Doctor has woken up!
+
+<c>Amiya
+Doctor...?
+I'm so happy... Doctor...
+
+<c>Medic
+Ah, careful! You mustn't do that...
+Don't try to move yet. Your body still hasn't fully adapted to this.
+
+<c><remove>Medic
+
+<c>Amiya
+Doctor...?
+
+<c>Doctor
+Who... are you?
+
+<c>Amiya
+Ah, Doctor... It's me...
+...
+It's me, Amiya.
+We've come to rescue you.
+
+<c>Doctor
+...Who... am I...?
+
+<c>Amiya
+You...
+You're a member of Rhodes Island, just like us...
+...as well as my partner.
+...Dr. {nickname}.
+You're the most important person to me.
+Doctor... you don't remember?
+
+<c>Doctor
+I see... Pleased to meet you, Amiya.
+
+<c>Amiya
+Ah, um, hello.
+...
+I, I don't know how to put this, but so many things have changed from before.
+That includes me as well.
+
+<c>Amiya
+However, you'll always be the most important person to me, Doctor. No matter what happens, this will never change.
+So that's why, please... give me a little more time.
+However little it might be...
+
+<c>Doctor
+...
+
+<c>Medic
+Does the doctor... really have amnesia?
+
+<c>Amiya
+...
+I'm sure everything will be fine if we give Doctor some space...
+
+<c>Doctor
+Where is this...
+
+<c>Amiya
+It's safe here—
+
+<nar>
+A banging sound is heard.
+
+<c>Amiya
+Huh? What's happening—
+
+<c>Heavily-Armed Man
+Amiya, we've got a problem!
+Someone broke into the facility!
+
+<nar>
+Several people wearing black masks and armed with a sword breaks into the facility.
+
+<c>Heavily-Armed Man
+The way they're dressed... they don't look like Ursus soldiers!
+
+<c><peek><solo>Reunion Member
+...
+
+<nar>
+Sounds of combat are heard...
+
+<c>Heavily-Armed Man
+What's the meaning of this?!
+
+<nar>
+...as the armed people, revealed to be part of Reunion, attacks.
+
+<c>Heavily-Armed Man
+They're attacking! Amiya, they're heavily equipped with weapons!
+
+<c><remove>Heavily-Armed Man
+
+<nar>
+A crossbow shot narrowly misses the medic.
+
+<c><peek>Medic
+Aaaahh!
+
+<c>Amiya
+Be careful, everyone! Take cover, and protect Doctor!
+These outfits... are they from the Reunion Movement? But how is that possible...
+Guards, prepare for battle!
+
+<c><ghost>Guard
+Roger!
+
+<nar>
+An explosion narrowly misses the Guard.
+
+<c>Guard
+Curses... Are they after the Doctor?!
+
+<c>Amiya
+No... Nobody else should know about the Doctor being here.
+Are you able to reach Kal'tsit?
+
+<c>Guard
+I'm not sure why, but the equipment isn't working!
+
+<c>Amiya
+...Someone has cut off our communications.
+Have we been discovered by the Ursus government?
+
+<c>Guard
+What do we do now?
+
+<c>Amiya
+Kal'tsit won't be able to command the battle as we had originally planned.
+...
+...Dr. {nickname}.
+I hope that... you'll be able to take command.
+
+<c>Medic
+Isn't that a bit too risky? The Doctor only just came to...
+
+<c>Amiya
+I'd like... to give it a try.
+
+<c><remove>Medic
+
+<c><remove>Guard
+
+<c>Amiya
+Even without memories, Doctor has...
+...fought alongside us before.
+
+<e>flashback
+
+<b>Background-Wildlands.png
+
+<c><solo>???
+Thank you for all of your guidance...
+
+<e>clear
+
+<b>Background-Chernobog_Indoor.png
+
+<c>Amiya
+...
+We've been through so much together...
+Doctor... I just know that you'll be able to do it.
+
+<e>flashback
+
+<b>Background-Wildlands.png
+
+<c><solo>???
+I know that you'll lead us to victory.
+
+<e>clear
+
+<b>Background-Chernobog_Indoor.png
+
+<c>Amiya
+I understand that asking you to do this is very sudden and inconsiderate.
+But... Please, lend us your aid.
+We'll be supporting you!
+
+<c>Doctor
+<choice>Let's push them back first!<...<We have no choice but to fight back, right?
+
+<c>Amiya
+Mm... I don't want to drag you into this.
+But right now, we need your wisdom more than ever, Dr. {nickname}.
+I hope that a part of you will reawaken during combat.
+Even though you might have doubts about yourself...
+But I believe in you.
+
+<i>We_Are_Rhodes_Island.png
+
+<c>Amiya
+I know you can do this.
+Please take command... of Rhodes Island!
+
+<end>

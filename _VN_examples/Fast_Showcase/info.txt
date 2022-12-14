@@ -1,0 +1,7 @@
+title: Fast showcase
+writer: Ondřej Kosour
+illust: Hyperglyph
+start: start.txt
+
+Amiya
+rh_leader/default.png

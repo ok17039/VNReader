@@ -1,0 +1,7 @@
+<c>Amiya
+Doctor, we don't have a lot of time. But don't worry, I will help you to regain basic movement capabilities...
+
+<nar>
+To be continued...
+
+<end>end 1

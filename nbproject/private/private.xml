@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/EvImage.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/GUI.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/EvCharacter.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/EvEnd.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/ln/Book.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/ln/Chara.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/EvBackground.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/Event.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/EventCaller.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/ln/Chapter.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/Reader.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/State.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/reader/EvNarration.java</file>
+            <file>file:/D:/Codin/Java/KosourOndrej_VNReader/src/mainm/MainMenu.java</file>
+        </group>
+    </open-files>
+</project-private>
