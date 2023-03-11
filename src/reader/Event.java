@@ -19,6 +19,6 @@ public abstract class Event {
         return tag;
     }
 
-    public abstract void changeState(String line, State currentState);
+    public abstract void changeState(String command, State currentState);
     
 }

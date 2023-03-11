@@ -16,7 +16,7 @@ public class EvEnd extends Event {
 
     @Override
     public void changeState(String line, State currentState) {
-        currentState.setReachedEnd(true);
+        currentState.setReachedNovelEnd();
     }
     
 }

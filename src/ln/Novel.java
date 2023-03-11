@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author Ondřej Kosour
  */
-public class Book {
+public class Novel {
     
     protected File directory;
     
@@ -24,9 +24,9 @@ public class Book {
     protected String illust;
     protected File start;
     
-    protected ArrayList<Chara> charas;
+    protected ArrayList<Character> charas;
 
-    public Book(File dir) {
+    public Novel(File dir) {
         directory = dir;
         charas = new ArrayList<>();
         init(dir);
@@ -35,7 +35,7 @@ public class Book {
     
     private void init(File dir) {
         
-        String infoPath = dir.getAbsolutePath() + "\\info.txt";
+        String infoPath = dir.getAbsolutePath() + "/info.txt";
         System.out.println(infoPath);
         
         try {
@@ -44,7 +44,7 @@ public class Book {
             title = bread.readLine().substring(7);
             writer = bread.readLine().substring(8);
             illust = bread.readLine().substring(8);
-            start = new File(dir.getAbsolutePath() + "\\script\\" +  bread.readLine().substring(7));
+            start = new File(dir.getAbsolutePath() + "/script/" +  bread.readLine().substring(7));
             
             String s = bread.readLine();
             
@@ -62,7 +62,7 @@ public class Book {
                 if (s == null) break;
                 charDefSpr = s;
                 
-                charas.add(new Chara(charName, charDefSpr));
+                charas.add(new Character(charName, charDefSpr));
                 
                 s = bread.readLine();
             }
@@ -98,7 +98,7 @@ public class Book {
     }
 
     
-    public ArrayList<Chara> getChars() {
+    public ArrayList<Character> getChars() {
         return charas;
     }
 
@@ -112,7 +112,7 @@ public class Book {
         
         String title = "Open a Visual Novel";
         
-        String infoPath = dir.getAbsolutePath() + "\\info.txt";
+        String infoPath = dir.getAbsolutePath() + "/info.txt";
         System.out.println(infoPath);
         
         try {

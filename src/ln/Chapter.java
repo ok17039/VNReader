@@ -16,15 +16,15 @@ import java.util.ArrayList;
  */
 public class Chapter {
     
-    protected ArrayList<Chara> charas;
+    protected ArrayList<Character> charas;
     protected String backgroud;
 
-    public Chapter(File curDir, BufferedReader br, Book ln) {
+    public Chapter(File curDir, BufferedReader br, Novel ln) {
         charas =  new ArrayList<>();
         init(curDir, br, ln);
     }
 
-    private void init(File curDir, BufferedReader br, Book ln) {
+    private void init(File curDir, BufferedReader br, Novel ln) {
         
         try {
             
@@ -46,7 +46,7 @@ public class Chapter {
                 if (s == null) break;
                 charSpr = s;
                 
-                charas.add(new Chara(charName, charSpr));
+                charas.add(new Character(charName, charSpr));
                 
                 s = br.readLine();
             }
@@ -55,7 +55,7 @@ public class Chapter {
             System.out.println("ERROR: File not found");
         }
         
-        for (Chara lnChara: ln.getChars()) {
+        for (Character lnChara: ln.getChars()) {
             if (!charas.contains(lnChara))
                 charas.add(lnChara);
                 
@@ -66,9 +66,9 @@ public class Chapter {
         return charas.isEmpty();
     }
 
-    public Chara getCharaByName(String actorName) {
+    public Character getCharaByName(String actorName) {
         
-        for (Chara chr: charas)
+        for (Character chr: charas)
             if (chr.getName().equals(actorName))
                 return chr;
         

@@ -8,15 +8,17 @@ package reader;
  *
  * @author Ondřej Kosour
  */
-public class EvNarration extends Event {
-    
-    public EvNarration() {
-        super("nar");
-    }
+public class EvNext extends Event {
 
+    public EvNext() {
+        super("next");
+    }
+    
     @Override
     public void changeState(String command, State currentState) {
-        currentState.setDuringNarration(true);
+        currentState.setNextChapterDir(command);
+        currentState.setReachedChapterEnd();
+        System.out.println("Loading new chapter: " + command);
     }
     
 }

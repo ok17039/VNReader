@@ -8,11 +8,11 @@ package ln;
  *
  * @author Ondřej Kosour
  */
-public class Chara {
+public class Character {
     protected String name;
     protected String defSprite;
 
-    public Chara(String name, String defSprite) {
+    public Character(String name, String defSprite) {
         this.name = name;
         this.defSprite = defSprite;
     }

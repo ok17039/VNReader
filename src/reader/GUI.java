@@ -9,6 +9,7 @@ import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -19,10 +20,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import ln.Book;
-import ln.Chara;
+import ln.Novel;
+import ln.Character;
 import mainm.MainMenu;
-
 
 /**
  *
@@ -33,20 +33,22 @@ public class GUI extends javax.swing.JFrame {
     Reader lnReader;
     State currentState;
     String lastBckg;
-    
+
     boolean isOver;
-    
+
     /**
      * Creates new form GUI
      */
-    public GUI(Reader lnReader, String lnPath, Book ln) {
+    public GUI(Reader lnReader, Novel ln, State currentState) {
         this.lnReader = lnReader;
         isOver = false;
-        
+
         initComponents();
-        initComponents_MANUALY_GOD_DAMNIT_NETBEANS(lnPath, ln);
-        
+        initComponents_MANUALY_GOD_DAMNIT_NETBEANS(ln);
+
         this.setVisible(true);
+
+        this.currentState = currentState;
     }
 
     /**
@@ -61,8 +63,12 @@ public class GUI extends javax.swing.JFrame {
         Layers = new javax.swing.JLayeredPane();
         Default_Buttons = new javax.swing.JLayeredPane();
         Button_Hide = new javax.swing.JToggleButton();
+        Button_Transcript = new javax.swing.JToggleButton();
         Button_Exit = new javax.swing.JToggleButton();
         Button_Continue = new javax.swing.JButton();
+        Button_CloseTranscript = new javax.swing.JToggleButton();
+        TranscriptArea_SP = new javax.swing.JScrollPane();
+        Transcript_Area = new javax.swing.JTextPane();
         NarrationArea_SP = new javax.swing.JScrollPane();
         Narration_Area = new javax.swing.JTextPane();
         Mask_Narration = new javax.swing.JLabel();
@@ -109,6 +115,27 @@ public class GUI extends javax.swing.JFrame {
         Default_Buttons.add(Button_Hide);
         Button_Hide.setBounds(20, 20, 90, 40);
 
+        Button_Transcript.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
+        Button_Transcript.setForeground(new java.awt.Color(204, 204, 204));
+        Button_Transcript.setText("TRANSCRIPT");
+        Button_Transcript.setToolTipText(null);
+        Button_Transcript.setBorder(null);
+        Button_Transcript.setBorderPainted(false);
+        Button_Transcript.setContentAreaFilled(false);
+        Button_Transcript.setFocusPainted(false);
+        Button_Transcript.setFocusable(false);
+        Button_Transcript.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Button_Transcript.setRequestFocusEnabled(false);
+        Button_Transcript.setVerifyInputWhenFocusTarget(false);
+        Button_Transcript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_TranscriptActionPerformed(evt);
+            }
+        });
+        Default_Buttons.setLayer(Button_Transcript, 2);
+        Default_Buttons.add(Button_Transcript);
+        Button_Transcript.setBounds(130, 20, 180, 40);
+
         Button_Exit.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
         Button_Exit.setForeground(new java.awt.Color(204, 204, 204));
         Button_Exit.setText("EXIT");
@@ -141,9 +168,49 @@ public class GUI extends javax.swing.JFrame {
         Default_Buttons.add(Button_Continue);
         Button_Continue.setBounds(0, 0, 1152, 648);
 
-        Layers.setLayer(Default_Buttons, 10);
+        Button_CloseTranscript.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
+        Button_CloseTranscript.setForeground(new java.awt.Color(204, 204, 204));
+        Button_CloseTranscript.setText("BACK");
+        Button_CloseTranscript.setToolTipText(null);
+        Button_CloseTranscript.setBorder(null);
+        Button_CloseTranscript.setBorderPainted(false);
+        Button_CloseTranscript.setContentAreaFilled(false);
+        Button_CloseTranscript.setFocusPainted(false);
+        Button_CloseTranscript.setFocusable(false);
+        Button_CloseTranscript.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Button_CloseTranscript.setRequestFocusEnabled(false);
+        Button_CloseTranscript.setVerifyInputWhenFocusTarget(false);
+        Button_CloseTranscript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_CloseTranscriptActionPerformed(evt);
+            }
+        });
+        Default_Buttons.setLayer(Button_CloseTranscript, 2);
+        Default_Buttons.add(Button_CloseTranscript);
+        Button_CloseTranscript.setBounds(20, 20, 90, 40);
+
+        Layers.setLayer(Default_Buttons, 11);
         Layers.add(Default_Buttons);
         Default_Buttons.setBounds(0, 0, 1152, 648);
+
+        TranscriptArea_SP.setBorder(null);
+        TranscriptArea_SP.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        TranscriptArea_SP.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        TranscriptArea_SP.setFocusable(false);
+        TranscriptArea_SP.setOpaque(false);
+
+        Transcript_Area.setEditable(false);
+        Transcript_Area.setBorder(null);
+        Transcript_Area.setFont(new java.awt.Font("Segoe UI Variable", 0, 20)); // NOI18N
+        Transcript_Area.setForeground(new java.awt.Color(255, 255, 255));
+        Transcript_Area.setAutoscrolls(false);
+        Transcript_Area.setFocusable(false);
+        Transcript_Area.setOpaque(false);
+        TranscriptArea_SP.setViewportView(Transcript_Area);
+
+        Layers.setLayer(TranscriptArea_SP, 10);
+        Layers.add(TranscriptArea_SP);
+        TranscriptArea_SP.setBounds(20, 80, 800, 548);
 
         NarrationArea_SP.setBorder(null);
         NarrationArea_SP.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -180,7 +247,7 @@ public class GUI extends javax.swing.JFrame {
         Actor_Area.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         Layers.setLayer(Actor_Area, 6);
         Layers.add(Actor_Area);
-        Actor_Area.setBounds(30, 558, 270, 70);
+        Actor_Area.setBounds(30, 554, 270, 70);
 
         TextArea_SP.setBorder(null);
         TextArea_SP.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -206,7 +273,7 @@ public class GUI extends javax.swing.JFrame {
 
         Layers.setLayer(TextArea_SP, 6);
         Layers.add(TextArea_SP);
-        TextArea_SP.setBounds(358, 562, 600, 70);
+        TextArea_SP.setBounds(358, 558, 600, 70);
 
         Masks_Default.setEnabled(false);
         Masks_Default.setPreferredSize(new java.awt.Dimension(1152, 648));
@@ -230,7 +297,6 @@ public class GUI extends javax.swing.JFrame {
         Masks_Default.setBounds(0, 0, 1152, 648);
 
         Characters.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Characters.setIcon(new javax.swing.ImageIcon("D:\\Codin\\Java\\KosourOndrej_VNReader\\AK_demo\\res\\char\\dog_girl\\default.png")); // NOI18N
         Characters.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         Characters.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Layers.setLayer(Characters, 3);
@@ -269,24 +335,32 @@ public class GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_ContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ContinueActionPerformed
-        
+
         if (!isOver) {
+            if (!Button_Transcript.isVisible()) return;
             if (!Button_Hide.isVisible()) {
+                // Show components
                 Button_Exit.setVisible(true);
                 Button_Hide.setVisible(true);
+                Button_Transcript.setVisible(true);
 
+                Mask_Top.setVisible(true);
+                
                 if (currentState.isDuringNarration()) {
                     NarrationArea_SP.setVisible(true);
                     Mask_Narration.setVisible(true);
+                    
+                } else {
+                    Mask_Bottom.setVisible(true);
                 }
 
                 Actor_Area.setVisible(true);
                 TextArea_SP.setVisible(true);
 
-                Masks_Default.setVisible(true);
-
             } else {
-                if (currentState != null) cleanup();
+                if (currentState != null) {
+                    cleanup();
+                }
                 lnReader.progress();
             }
         } else {
@@ -301,8 +375,10 @@ public class GUI extends javax.swing.JFrame {
 
     private void Button_HideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_HideActionPerformed
         if (currentState != null) {
+            // Hide components
             Button_Exit.setVisible(false);
             Button_Hide.setVisible(false);
+            Button_Transcript.setVisible(false);
 
             NarrationArea_SP.setVisible(false);
             Mask_Narration.setVisible(false);
@@ -310,88 +386,141 @@ public class GUI extends javax.swing.JFrame {
             Actor_Area.setVisible(false);
             TextArea_SP.setVisible(false);
 
-            Masks_Default.setVisible(false);
+            Mask_Top.setVisible(false);
+            Mask_Bottom.setVisible(false);
         }
     }//GEN-LAST:event_Button_HideActionPerformed
 
-    private void initComponents_MANUALY_GOD_DAMNIT_NETBEANS(String lnDir, Book ln) {
-        setLocationRelativeTo(null);
+    private void Button_TranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TranscriptActionPerformed
+        if (currentState != null) {
+            Transcript_Area.setText(currentState.getPastText());
+
+            // Hide components
+            Button_Hide.setVisible(false);
+            Button_Transcript.setVisible(false);
+
+            NarrationArea_SP.setVisible(false);
+            Mask_Narration.setVisible(false);
+
+            Actor_Area.setVisible(false);
+            TextArea_SP.setVisible(false);
+            Mask_Bottom.setVisible(false);
+            
+            // Show components
+            Button_CloseTranscript.setVisible(true);
+            TranscriptArea_SP.setVisible(true);
+            // Mask_Transcript.setVisible(true);
+        }
+    }//GEN-LAST:event_Button_TranscriptActionPerformed
+
+    private void Button_CloseTranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_CloseTranscriptActionPerformed
+        // Hide components
+        Button_CloseTranscript.setVisible(false);
+        TranscriptArea_SP.setVisible(false);
+        // Mask_Transcript.setVisible(false);
         
+        // Show components
+        Button_Exit.setVisible(true);
+        Button_Hide.setVisible(true);
+        Button_Transcript.setVisible(true);
+
+        if (currentState.isDuringNarration()) {
+            NarrationArea_SP.setVisible(true);
+            Mask_Narration.setVisible(true);
+                    
+        } else {
+            Mask_Bottom.setVisible(true);
+        }
+
+        Actor_Area.setVisible(true);
+        TextArea_SP.setVisible(true);
+    }//GEN-LAST:event_Button_CloseTranscriptActionPerformed
+
+    private void initComponents_MANUALY_GOD_DAMNIT_NETBEANS(Novel ln) {
+        setLocationRelativeTo(null);
+
         TextArea_SP.getViewport().setOpaque(false);
         TextArea_SP.setViewportBorder(null);
         Text_Area.setBackground(new Color(0, 0, 0, 0));
         Text_Area.setText("Writer:   " + ln.getWriter() + "\nIllust:      " + ln.getIllust());
-        
+
         Actor_Area.setText("");
-        
+
         StyledDocument sDoc_NarAr = Narration_Area.getStyledDocument();
         SimpleAttributeSet centerAlign = new SimpleAttributeSet();
         StyleConstants.setAlignment(centerAlign, StyleConstants.ALIGN_CENTER);
         StyleConstants.setBackground(centerAlign, new Color(0, 0, 0, 0));
-        
+
         try {
             sDoc_NarAr.insertString(0, ln.getTitle() + "\n" + ln.getStart().getName().substring(0, ln.getStart().getName().lastIndexOf('.')), centerAlign);
         } catch (BadLocationException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         sDoc_NarAr.setParagraphAttributes(0, sDoc_NarAr.getLength(), centerAlign, false);
-        
+
         NarrationArea_SP.getViewport().setOpaque(false);
         NarrationArea_SP.setViewportBorder(null);
         Narration_Area.setStyledDocument(sDoc_NarAr);
         Narration_Area.setBackground(new Color(0, 0, 0, 0));
-        
         Mask_Narration.setVisible(false);
+
+        TranscriptArea_SP.getViewport().setOpaque(false);
+        TranscriptArea_SP.setViewportBorder(null);
+        Transcript_Area.setBackground(new Color(0, 0, 0, 0));
+        // Mask_Transcript.setVisible(false);
         
         Characters.setIcon(new ImageIcon());
-        
-        initUI(lnDir);
-        
+
+        initUI(ln.getDirectory().getAbsolutePath());
+
         Button_Exit.setBackground(new Color(0, 0, 0, 0));
-        
+        Button_CloseTranscript.setVisible(false);
+
         Background.setVisible(false);
     }
+
     
-    
-    public void setup(State currSt) {
-        
-        currentState = currSt;
-        
+    public void setup() {
+
         String currentText = currentState.getText();
-        
-        if (!currentText.isEmpty()) {
-            currentText = currentText.replace("{nickname}", currentState.getPlayerName());
-            if (currentText.equalsIgnoreCase("{}")) {
-                currentText = "";
-                currentState.setActor("");
-            }
-            
-            currentState.setText(currentText);
+
+        if (currentText.isEmpty()) {
+            return;
         }
-        
+
+        currentText = currentText.replace("{nickname}", currentState.getPlayerName());
+        if (currentText.equalsIgnoreCase("{}")) {
+            currentText = "";
+            currentState.setActor("");
+        }
+
+        currentState.setText(currentText, false);
+
     }
-    
-    public void update(State currSt) {
-        
-        setup(currSt);
-        
+
+    public void update() {
+
+        setup();
+
         drawScene();
-        
+
         if (currentState.isDuringNarration()) {
             Actor_Area.setText("");
             Text_Area.setText("");
             Mask_Narration.setVisible(true);
+            Mask_Bottom.setVisible(false);
             NarrationArea_SP.setVisible(true);
             Narration_Area.setText(currentState.getText());
-            
+
         } else {
             Mask_Narration.setVisible(false);
+            Mask_Bottom.setVisible(true);
             Narration_Area.setText("");
             Actor_Area.setText(currentState.getActor().getName());
             Text_Area.setText(currentState.getText());
         }
-        
+
         if (currentState.isDuringImage()) {
             Characters.setVisible(false);
             setImage();
@@ -399,142 +528,164 @@ public class GUI extends javax.swing.JFrame {
             Characters.setVisible(true);
             setBackground();
         }
-        
+
         // System.out.println(currentState.getActor().getName() + ": " + currentState.getText());
-        
-        
     }
-    
+
     public void cleanup() {
-        
-        if(currentState.isDuringNarration()) currentState.setDuringNarration(false);
+
+        if (currentState.isDuringNarration()) {
+            currentState.setDuringNarration(false);
+        }
+    }
+
+    
+    public void nextChapter(State currentState, File currentScript, Novel ln) {
+        Actor_Area.setText("");
+        Text_Area.setText("End of chapter");
+        Mask_Narration.setVisible(true);
+        NarrationArea_SP.setVisible(true);
+        Narration_Area.setText(ln.getTitle() + "\n" + currentScript.getName().substring(0, currentScript.getName().lastIndexOf('.')));
+        this.currentState = currentState;
     }
     
-    public void end(Book ln) {
+    public void end(Novel ln, File currentScript) {
         isOver = true;
-        
+
         Actor_Area.setText("");
         Text_Area.setText("The End");
         Mask_Narration.setVisible(true);
         NarrationArea_SP.setVisible(true);
-        Narration_Area.setText(ln.getTitle() + "\n" + ln.getStart().getName().substring(0, ln.getStart().getName().lastIndexOf('.')));
+        Narration_Area.setText(ln.getTitle() + "\n" + currentScript.getName().substring(0, currentScript.getName().lastIndexOf('.')));
     }
-    
-    
+
     private void initUI(String lnPath) {        // DO ALL
-        
+
         try {
-            BufferedImage textMaskBottomOrig = ImageIO.read(new File(lnPath + "\\res\\ui\\Mask_Bottom.png"));
-            BufferedImage textMaskTopOrig = ImageIO.read(new File(lnPath + "\\res\\ui\\Mask_Top.png"));
-            BufferedImage narrationMaskOrig = ImageIO.read(new File(lnPath + "\\res\\ui\\Mask_Narration.png"));
-            
+            BufferedImage textMaskBottomOrig = ImageIO.read(new File(lnPath + "/res/ui/Mask_Bottom.png"));
+            BufferedImage textMaskTopOrig = ImageIO.read(new File(lnPath + "/res/ui/Mask_Top.png"));
+            BufferedImage narrationMaskOrig = ImageIO.read(new File(lnPath + "/res/ui/Mask_Narration.png"));
+
             Mask_Bottom.setIcon(new ImageIcon(scaleImage(textMaskBottomOrig, Mask_Bottom.getWidth(), Mask_Bottom.getHeight())));
             Mask_Top.setIcon(new ImageIcon(scaleImage(textMaskTopOrig, Mask_Top.getWidth(), Mask_Top.getHeight())));
             Mask_Narration.setIcon(new ImageIcon(scaleImage(narrationMaskOrig, Mask_Narration.getWidth(), Mask_Narration.getHeight())));
-        
+
         } catch (IOException ex) {
             System.out.println("ERROR: UI elements not found");
         }
-        
-        
-        
+
     }
+
     
     /**
      * Vykreslí postavy
      */
     private void drawScene() {
-        
+
         var canvas = new BufferedImage(Characters.getWidth(), Characters.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        
+
         Graphics2D g2D = canvas.createGraphics();
         g2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        
+
         int sceneLen = 1;
-        Chara actr = currentState.getActor();
-        int actorIndex = 0;
-        
-        
-        if (!currentState.isDuringSolo()) {
-            sceneLen = currentState.getSceneLength();
-            actorIndex = -1;
-            if (sceneLen > 0) {
-                for (int i = 0; i < sceneLen; i++) {
-                    if (currentState.getSceneChar(i).equals(actr)) {
-                        actorIndex = i;
+        Character actor = currentState.getActor();
+        int actorIndex = 0;     // Position of the actor from the left; -1: don't draw the actor
 
-                    } else {
-                        try {
-                            var sprite = ImageIO.read(new File(currentState.getLnDir() + "\\res\\char\\" + currentState.getSceneChar(i).getDefSprite()));
+        // Draw other characters
+        if (!currentState.isDuringSolo()) {                 // If the actor has a solo, the other charaters are not drawn
+            sceneLen = currentState.getSceneLength();       // How many characters on scene
+            actorIndex = -1;    // ?
+            for (int i = 0; i < sceneLen; i++) {            // Go through the whole scene
+                if (currentState.getSceneChar(i).equals(actor)) {     // If the current char is the actor, skip,
+                    actorIndex = i;                                             // note actor position
 
-                            int height = (int) (Characters.getHeight() * 1.3425);
-                            int width = scaleDimensionsKeepRatio(sprite.getWidth(), sprite.getHeight(), -1, height);
+                } else {
+                    try {
+                        BufferedImage sprite = ImageIO.read(new File(currentState.getLnDir() + "/res/char/" + currentState.getSceneChar(i).getDefSprite()));      // Create an image with the sprite
+                        BufferedImage spriteFinal = new BufferedImage(sprite.getWidth(), sprite.getHeight(), sprite.getType());                    // Create an image for the processed sprite
+                        Graphics2D sprite_g2D = spriteFinal.createGraphics();
+                        
+                        float[] scales = { 0.35f, 0.35f, 0.35f, 1f};
+                        float[] offsets = new float[4];
+                        RescaleOp darken = new RescaleOp(scales, offsets, null);
+                        sprite_g2D.drawImage(sprite, darken, 0, 0);                         // Draw the processed image
+                        sprite_g2D.dispose();
+                        
+                        int height = (int) (Characters.getHeight() * 1.3425);                                                                                  // Calculate sprite height from window size
+                        int width = scaleDimensionsKeepRatio(sprite.getWidth(), sprite.getHeight(), -1, height);                 // Calculate width using AR and height
 
-                            int x = (Characters.getWidth() / (sceneLen + 1) * (i + 1)) - (width / 2);
+                        int x = (Characters.getWidth() / (sceneLen + 1) * (i + 1)) - (width / 2);                                                             // Calculate position
+                        
+                        g2D.drawImage(spriteFinal, x, 30, width, height, null);      // Draw sprite on the scene
 
-                            g2D.drawImage(sprite, x, 30, width, height, null);
-
-                        } catch (IOException ex) {
-                            System.out.println("ERROR: Sprite not found: " + currentState.getLnDir() + "\\res\\char\\" + currentState.getSceneChar(i).getDefSprite());
-                        }
+                    } catch (IOException ex) {
+                        System.out.println("ERROR: Sprite not found: " + currentState.getLnDir() + "/res/char/" + currentState.getSceneChar(i).getDefSprite());
                     }
                 }
             }
+
         }
 
-        if (actr.getDefSprite().isBlank()) actorIndex = -1;
-        if (actorIndex >= 0) {
+        // Draw the actor
+        if (actor.getDefSprite().isBlank()) {       // Don't draw the actor if it has no sprite
+            actorIndex = -1;
+        }
+        
+        if (actorIndex != -1) {
             try {
-                var sprite = ImageIO.read(new File(currentState.getLnDir() + "\\res\\char\\" + actr.getDefSprite()));
+                var sprite = ImageIO.read(new File(currentState.getLnDir() + "/res/char/" + actor.getDefSprite()));
 
                 int height = (int) (Characters.getHeight() * 1.3425);
                 int width = scaleDimensionsKeepRatio(sprite.getWidth(), sprite.getHeight(), -1, height);
 
                 int x = (Characters.getWidth() / (sceneLen + 1) * (actorIndex + 1)) - (width / 2);
 
-                g2D.drawImage(sprite, x, 20, width, height, null);
+                g2D.drawImage(sprite, x, 30, width, height, null);
 
             } catch (IOException ex) {
-                System.out.println("ERROR: Actor sprite not found: " + currentState.getLnDir() + "\\res\\char\\" + actr.getDefSprite());
+                System.out.println("ERROR: Actor sprite not found: " + currentState.getLnDir() + "/res/char/" + actor.getDefSprite());
             }
         }
-        
-        
+
         g2D.dispose();
-        
+
         Characters.setIcon(new ImageIcon(canvas));
     }
-    
+
     /**
      * Nastaví na pozadí správně nadimenzovaný obrázek
      */
     private void setBackground() {
-        
-        String bckg = currentState.getBackground().substring(currentState.getBackground().lastIndexOf("\\") + 1);
-        
+
+        String bckg = currentState.getBackground().substring(currentState.getBackground().lastIndexOf("/") + 1);
+
         javax.swing.ImageIcon lastBg;
         lastBg = (ImageIcon) Background.getIcon();
-        
+
         if ((lastBg == null) || !Background.isVisible()) {
-            if (BlackOrWhite.getBackground().equals(Color.BLACK) && bckg.equalsIgnoreCase("black"))
+            if (BlackOrWhite.getBackground().equals(Color.BLACK) && bckg.equalsIgnoreCase("black")) {
                 return;
-            else if (BlackOrWhite.getBackground().equals(Color.WHITE) && bckg.equalsIgnoreCase("white"))
+            } else if (BlackOrWhite.getBackground().equals(Color.WHITE) && bckg.equalsIgnoreCase("white")) {
                 return;
+            }
         }
-        
-        if (lastBg != null)
-            if (bckg.equals(lastBckg))
+
+        if (lastBg != null) {
+            if (bckg.equals(lastBckg)) {
                 return;
-        
+            }
+        }
+
         try {
 
             System.out.println("Setting background: " + bckg);
 
             if (bckg.equalsIgnoreCase("black") || bckg.equalsIgnoreCase("white")) {
-                if (bckg.equalsIgnoreCase("black"))
+                if (bckg.equalsIgnoreCase("black")) {
                     BlackOrWhite.setBackground(Color.BLACK);
-                else
+                } else {
                     BlackOrWhite.setBackground(Color.WHITE);
+                }
 
                 Background.setVisible(false);
 
@@ -543,47 +694,51 @@ public class GUI extends javax.swing.JFrame {
                 Background.setVisible(false);
 
             } else {
-                
+
                 BufferedImage origBckg = ImageIO.read(new File(currentState.getBackground()));
                 Background.setIcon(new ImageIcon(scaleImage(origBckg, Background.getWidth(), Background.getHeight())));
                 Background.setVisible(true);
-                
+
             }
-            
+
             lastBckg = bckg;
 
         } catch (IOException ex) {
             System.out.println("ERROR: Image not found: " + currentState.getBackground());
         }
     }
-    
+
     private void setImage() {
-        
-        String img = currentState.getImage().substring(currentState.getImage().lastIndexOf("\\") + 1);
-        
+
+        String img = currentState.getImage().substring(currentState.getImage().lastIndexOf("/") + 1);
+
         javax.swing.ImageIcon lastBg;
         lastBg = (ImageIcon) Background.getIcon();
-        
+
         if ((lastBg == null) || !Background.isVisible()) {
-            if (BlackOrWhite.getBackground().equals(Color.BLACK) && img.equalsIgnoreCase("black"))
+            if (BlackOrWhite.getBackground().equals(Color.BLACK) && img.equalsIgnoreCase("black")) {
                 return;
-            else if (BlackOrWhite.getBackground().equals(Color.WHITE) && img.equalsIgnoreCase("white"))
+            } else if (BlackOrWhite.getBackground().equals(Color.WHITE) && img.equalsIgnoreCase("white")) {
                 return;
+            }
         }
-        
-        if (lastBg != null)
-            if (img.equals(lastBckg))
+
+        if (lastBg != null) {
+            if (img.equals(lastBckg)) {
                 return;
-        
+            }
+        }
+
         try {
 
             System.out.println("Setting image: " + img);
 
             if (img.equalsIgnoreCase("black") || img.equalsIgnoreCase("white")) {
-                if (img.equalsIgnoreCase("black"))
+                if (img.equalsIgnoreCase("black")) {
                     BlackOrWhite.setBackground(Color.BLACK);
-                else
+                } else {
                     BlackOrWhite.setBackground(Color.WHITE);
+                }
 
                 Background.setVisible(false);
 
@@ -592,47 +747,54 @@ public class GUI extends javax.swing.JFrame {
                 Background.setVisible(false);
 
             } else {
-                
+
                 BufferedImage origImg = ImageIO.read(new File(currentState.getImage()));
                 Background.setIcon(new ImageIcon(scaleImage(origImg, Background.getWidth(), Background.getHeight())));
                 Background.setVisible(true);
-                
+
             }
-            
+
             lastBckg = img;
 
         } catch (IOException ex) {
             System.out.println("ERROR: Image not found: " + currentState.getImage());
         }
     }
-    
-    private int scaleDimensionsKeepRatio (int sourceW, int sourceH, int outputW, int outputH) {
-        
-        if (sourceW <= 0 || sourceH <= 0 || (outputW <= 0 && outputH <= 0)) return -1;
-        
+
+    /**
+     * Vypočítá druhou stranu obrázku z původních velikostí obou stran a požadované velikosti jedné nové strany
+     */
+    private int scaleDimensionsKeepRatio(int sourceW, int sourceH, int outputW, int outputH) {
+
+        if (sourceW <= 0 || sourceH <= 0 || (outputW <= 0 && outputH <= 0)) {
+            return -1;
+        }
+
         int ratio = sourceW / sourceH;
-        
-        if (outputH == -1)
+
+        if (outputH == -1) {
             return outputW / ratio;
-        
-        if (outputW == -1)
+        }
+
+        if (outputW == -1) {
             return outputH * ratio;
-        
+        }
+
         return -1;
     }
-    
-    private BufferedImage scaleImage (BufferedImage source, int width, int height) {
-        
+
+    private BufferedImage scaleImage(BufferedImage source, int width, int height) {
+
         var scaled = new BufferedImage(width, height, source.getType());
         Graphics2D g2D = scaled.createGraphics();
         g2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        
+
         g2D.drawImage(source, 0, 0, width, height, null);
         g2D.dispose();
-        
+
         return scaled;
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -672,9 +834,11 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel Actor_Area;
     private javax.swing.JLabel Background;
     private javax.swing.JPanel BlackOrWhite;
+    private javax.swing.JToggleButton Button_CloseTranscript;
     private javax.swing.JButton Button_Continue;
     private javax.swing.JToggleButton Button_Exit;
     private javax.swing.JToggleButton Button_Hide;
+    private javax.swing.JToggleButton Button_Transcript;
     private javax.swing.JLabel Characters;
     private javax.swing.JLayeredPane Default_Buttons;
     private javax.swing.JLayeredPane Layers;
@@ -686,6 +850,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextPane Narration_Area;
     private javax.swing.JScrollPane TextArea_SP;
     private javax.swing.JTextArea Text_Area;
+    private javax.swing.JScrollPane TranscriptArea_SP;
+    private javax.swing.JTextPane Transcript_Area;
     // End of variables declaration//GEN-END:variables
 
 }

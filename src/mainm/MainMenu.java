@@ -8,7 +8,7 @@ import java.awt.Color;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import ln.Book;
+import ln.Novel;
 import reader.Reader;
 
 /**
@@ -79,7 +79,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         Title_Ver.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         Title_Ver.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Title_Ver.setText("ver. 1.0");
+        Title_Ver.setText("ver. 1.1");
         Title_Ver.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         Title_Ver.setMaximumSize(new java.awt.Dimension(100, 50));
         Title_Ver.setMinimumSize(new java.awt.Dimension(100, 50));
@@ -243,15 +243,16 @@ public class MainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Menu_OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_OpenActionPerformed
-        var chooseFile = new JFileChooser();
-        chooseFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        var fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Downloads"));
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        if (chooseFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             
-            Menu_SelectedLN.setText(Book.getTitle(chooseFile.getSelectedFile()));
+            Menu_SelectedLN.setText(Novel.getTitle(fileChooser.getSelectedFile()));
             if(!Menu_SelectedLN.getText().equals("Open a Visual Novel")) {
                 
-                lnDir = chooseFile.getSelectedFile();
+                lnDir = fileChooser.getSelectedFile();
                 Menu_Play.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Not a valid Visual Novel directory.");

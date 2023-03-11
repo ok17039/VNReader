@@ -6,7 +6,7 @@ package reader;
 
 import java.util.ArrayList;
 import ln.Chapter;
-import ln.Chara;
+import ln.Character;
 
 /**
  *
@@ -17,8 +17,8 @@ public class State {
     protected String background;
     protected String image;
     
-    protected ArrayList<Chara> scene;
-    protected Chara actor;
+    protected ArrayList<Character> scene;
+    protected Character actor;
     protected String peekingChar;
             
     protected String text;
@@ -28,12 +28,15 @@ public class State {
     
     protected Chapter chapt;
     protected String lnDir;
+    protected String chDir;
+    protected String nextChDir;
     
     protected boolean duringSolo;
     protected boolean duringNarration;
     protected boolean duringImage;
     
-    protected boolean reachedEnd;
+    protected boolean reachedNovelEnd;
+    protected boolean reachedChapterEnd;
 
     public State(Chapter chapt, String lnDir, String playerName) {
         background = "black";
@@ -43,21 +46,22 @@ public class State {
         this.chapt = chapt;
         this.lnDir = lnDir;
         this.playerName = playerName;
-        reachedEnd = false;
+        reachedNovelEnd = false;
+        reachedChapterEnd = false;
     }
 
 
     // Getters
     public String getBackground() {
-        return lnDir + "\\res\\bg\\" + background;
+        return lnDir + "/res/bg/" + background;
     }
 
     public String getImage() {
-        return lnDir + "\\res\\img\\" + image;
+        return lnDir + "/res/img/" + image;
     }
 
     
-    public Chara getSceneChar(int place) {
+    public Character getSceneChar(int place) {
         return scene.get(place);
     }
     
@@ -65,7 +69,7 @@ public class State {
         return scene.size();
     }
     
-    public Chara getActor() {
+    public Character getActor() {
         return actor;
     }
 
@@ -93,8 +97,16 @@ public class State {
     }
 
     
-    public boolean reachedEnd() {
-        return reachedEnd;
+    public boolean reachedNovelEnd() {
+        return reachedNovelEnd;
+    }
+    
+    public boolean reachedChapterEnd() {
+        return reachedChapterEnd;
+    }
+    
+    public String getNextChapterDir() {
+        return nextChDir;
     }
 
     
@@ -167,7 +179,7 @@ public class State {
         if (chapt.getCharaByName(actorName) != null) {
             this.actor = chapt.getCharaByName(actorName);
         } else {
-            this.actor = new Chara(actorName, "");
+            this.actor = new Character(actorName, "");
         }
     }
 
@@ -176,14 +188,24 @@ public class State {
     }
     
     
-    public void setText(String text) {
-        pastText += (actor.getName().isBlank()) ? "\n" + this.text : "\n" + actor.getName() + ": " + this.text;
+    public void setText(String text, boolean shouldWriteTotranscript) {
+        if (shouldWriteTotranscript && actor != null) {
+            pastText += (actor.getName().isBlank()) ? "\n" + this.text : "\n" + actor.getName() + ": " + this.text;
+        }
         this.text = text;
     }
 
     
-    public void setReachedEnd(boolean reachedEnd) {
-        this.reachedEnd = reachedEnd;
+    public void setReachedNovelEnd() {
+        this.reachedNovelEnd = true;
+    }
+    
+    public void setReachedChapterEnd() {
+        this.reachedChapterEnd = true;
+    }
+    
+    public void setNextChapterDir(String nextChDir) {
+        this.nextChDir = nextChDir;
     }
     
     

@@ -21,18 +21,20 @@ public class EventCaller {
         events.add(new EvNarration());
         events.add(new EvImage());
         events.add(new EvEnd());
+        events.add(new EvNext());
         
     }
     
     public void process(String line, State currentState) {
         String tag = line.substring(line.indexOf('<') + 1, line.indexOf('>'));
+        String command = line.substring(line.indexOf('>') + 1);
         
         // System.out.println(tag);
         // System.out.println(line.substring(line.indexOf('>') + 1));
         
         for (var evs: events) {
             if (evs.getTag().equalsIgnoreCase(tag)) {
-                evs.changeState(line.substring(line.indexOf('>') + 1), currentState);
+                evs.changeState(command, currentState);
             }
         }
     }
