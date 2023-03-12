@@ -6,7 +6,7 @@ package reader;
 
 /**
  *
- * @author HexxTheSwagger
+ * @author Ondřej Kosour
  */
 public class EvImage extends Event {
 

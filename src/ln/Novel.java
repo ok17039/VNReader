@@ -104,9 +104,9 @@ public class Novel {
 
     
     /**
-     * Vytáhne z povinného souboru info.txt název knihy
-     * @param dir Adresář knihy
-     * @return Název knihy
+     * Reads the novel name from info.txt
+     * @param dir Novel directory
+     * @return Novel name
      */
     public static String getTitle(File dir) {
         

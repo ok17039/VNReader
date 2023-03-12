@@ -7,7 +7,7 @@ package reader;
 import java.util.ArrayList;
 
 /**
- * Volá objekty značek ve scénáři
+ * Calls a appropriate event with its command
  * @author Ondřej Kosour
  */
 public class EventCaller {

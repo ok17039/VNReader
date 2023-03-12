@@ -5,7 +5,6 @@
 package reader;
 
 import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -30,9 +29,9 @@ import mainm.MainMenu;
  */
 public class GUI extends javax.swing.JFrame {
 
-    Reader lnReader;
-    State currentState;
-    String lastBckg;
+    private Reader lnReader;
+    private State currentState;
+    private String lastBckg;
 
     boolean isOver;
 
@@ -335,7 +334,7 @@ public class GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_ContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ContinueActionPerformed
-
+        
         if (!isOver) {
             if (!Button_Transcript.isVisible()) return;
             if (!Button_Hide.isVisible()) {
@@ -481,7 +480,7 @@ public class GUI extends javax.swing.JFrame {
     }
 
     
-    public void setup() {
+    private void setup() {
 
         String currentText = currentState.getText();
 
@@ -532,7 +531,7 @@ public class GUI extends javax.swing.JFrame {
         // System.out.println(currentState.getActor().getName() + ": " + currentState.getText());
     }
 
-    public void cleanup() {
+    private void cleanup() {
 
         if (currentState.isDuringNarration()) {
             currentState.setDuringNarration(false);
@@ -578,7 +577,7 @@ public class GUI extends javax.swing.JFrame {
 
     
     /**
-     * Vykreslí postavy
+     * Draws characters sprites
      */
     private void drawScene() {
 
@@ -653,7 +652,7 @@ public class GUI extends javax.swing.JFrame {
     }
 
     /**
-     * Nastaví na pozadí správně nadimenzovaný obrázek
+     * Sets a properly scaled background image
      */
     private void setBackground() {
 
@@ -762,7 +761,8 @@ public class GUI extends javax.swing.JFrame {
     }
 
     /**
-     * Vypočítá druhou stranu obrázku z původních velikostí obou stran a požadované velikosti jedné nové strany
+     * Takes the original dimensions of an image, one desired scaled dimension and outputs the other dimension, scaled such that AR is kept
+     * e.g: 16, 9,  32 -> 18
      */
     private int scaleDimensionsKeepRatio(int sourceW, int sourceH, int outputW, int outputH) {
 
