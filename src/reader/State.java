@@ -4,6 +4,7 @@
  */
 package reader;
 
+import java.io.File;
 import java.util.ArrayList;
 import ln.Chapter;
 import ln.Character;
@@ -26,9 +27,9 @@ public class State {
     
     protected String playerName;
     
-    protected Chapter chapt;
+    protected Chapter chapter;
     protected String lnDir;
-    protected String chDir;
+    protected String chPath;
     protected String nextChDir;
     
     protected boolean duringSolo;
@@ -43,7 +44,7 @@ public class State {
         scene = new ArrayList<>();
         peekingChar = null;
         duringSolo = false;
-        this.chapt = chapt;
+        this.chapter = chapt;
         this.lnDir = lnDir;
         this.playerName = playerName;
         reachedNovelEnd = false;
@@ -53,11 +54,27 @@ public class State {
 
     // Getters
     public String getBackground() {
-        return lnDir + "/res/bg/" + background;
+        String bgPath = lnDir + "/res/bg/" + chapter.getName() + '/' + background;
+        
+        var bg = new File(bgPath);
+        
+        if (bg.isFile()) {
+            return bgPath;
+        } else {
+            return lnDir + "/res/bg/" + background;
+        }
     }
 
     public String getImage() {
-        return lnDir + "/res/img/" + image;
+        String imgPath = lnDir + "/res/img/" + chapter.getName() + '/' + image;
+        
+        var img = new File(imgPath);
+        
+        if (img.isFile()) {
+            return imgPath;
+        } else {
+            return lnDir + "/res/img/" + image;
+        }
     }
 
     
@@ -139,7 +156,7 @@ public class State {
 
     public void putSceneChar(String charName, int place) {
         
-        var chara = chapt.getCharaByName(charName);
+        var chara = chapter.getCharaByName(charName);
         if (chara == null) {
             System.out.println("ERROR: No such chara to add: \"" + charName + "\"");
             return;
@@ -166,7 +183,7 @@ public class State {
 
     public void remSceneChar(String charName) {
         
-        var chara = chapt.getCharaByName(charName);
+        var chara = chapter.getCharaByName(charName);
         if (chara == null) {
             System.out.println("ERROR: No such chara to delete: \"" + charName + "\"");
             return;
@@ -176,8 +193,8 @@ public class State {
     }
     
     public void setActor(String actorName) {
-        if (chapt.getCharaByName(actorName) != null) {
-            this.actor = chapt.getCharaByName(actorName);
+        if (chapter.getCharaByName(actorName) != null) {
+            this.actor = chapter.getCharaByName(actorName);
         } else {
             this.actor = new Character(actorName, "");
         }

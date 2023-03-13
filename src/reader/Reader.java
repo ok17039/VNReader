@@ -32,33 +32,26 @@ public class Reader {
     
     GUI guiWindow;
     
-    public Reader(File lnDir, String playerName) {
+    public Reader(Novel ln, String playerName, File saveFile) {
         this.playerName = playerName;
-        init(lnDir);
+        this.ln = ln;
+        loadSave(saveFile);
+        init();
     }
 
-    private void init(File lnDir) {
-        ln = new Novel(lnDir);
-        loadChapter(ln.getStart());
-        /*currentScript = ln.getStart();      // Get the first chapter
-
-        try {
-            bread = new BufferedReader(new FileReader(currentScript));
-        } catch (FileNotFoundException e) {
-            System.out.println("ERROR: Chapter not found");
-        }
-        
-        chpt = new Chapter(currentScript, bread, ln);
-        System.out.println("Playing chapter: " + currentScript.getAbsolutePath());
-        
-        //printFile(currentScript);
-        
-        currentState = new State(chpt, lnDir.getAbsolutePath(), playerName);
-        loadingEvents = true;*/
-        
+    private void init() {
         evCl = new EventCaller();
         
         guiWindow = new GUI(this, ln, currentState);
+    }
+
+    private void loadSave(File saveFile) {
+        if (!saveFile.isFile()) {
+            loadChapter(ln.getStart());
+            return;
+        }
+        
+        
     }
     
     public void loadChapter(File newScript) {
@@ -85,7 +78,7 @@ public class Reader {
             while (!loadingEvents) {
                 
                 readingLine = bread.readLine();
-                System.out.println("Current line: " + readingLine);
+                //System.out.println("Current line: " + readingLine);
                 
                 if (readingLine.isBlank()) {
                     loadingEvents = true;
@@ -103,7 +96,7 @@ public class Reader {
             while (loadingEvents) {
                 
                 readingLine = bread.readLine();
-                System.out.println("Current line: " + readingLine);
+                //System.out.println("Current line: " + readingLine);
                 // if (readingLine == null) return;
 
                 if (readingLine.startsWith("<")) {
@@ -134,14 +127,6 @@ public class Reader {
         } catch (IOException e) {
             System.out.println("ERROR: File can't be read");
         }
-        
-        // System.out.println((currentState.getActor().getName().isBlank()) ? currentState.getText() : currentState.getActor().getName() + ": " + currentState.getText());
-        
-        /*System.out.println("--| Queue |--");
-        for (int i = 0; i < currentState.getSceneLength(); i++) {
-            System.out.println(currentState.getSceneChar(i).getName());
-        }
-        System.out.println("-------------");*/
     }
     
     public void end() {

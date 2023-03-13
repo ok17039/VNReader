@@ -5,6 +5,10 @@
         <group>
             <file>file:/media/CHONKER/Codin/Java/VNReader/src/reader/GUI.java</file>
             <file>file:/media/CHONKER/Codin/Java/VNReader/src/mainm/MainMenu.java</file>
+            <file>file:/media/CHONKER/Codin/Java/VNReader/src/reader/Reader.java</file>
+            <file>file:/media/CHONKER/Codin/Java/VNReader/src/ln/Novel.java</file>
+            <file>file:/media/CHONKER/Codin/Java/VNReader/src/ln/Character.java</file>
+            <file>file:/media/CHONKER/Codin/Java/VNReader/src/ln/Chapter.java</file>
         </group>
     </open-files>
 </project-private>

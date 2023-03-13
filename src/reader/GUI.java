@@ -4,6 +4,7 @@
  */
 package reader;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -61,11 +63,11 @@ public class GUI extends javax.swing.JFrame {
 
         Layers = new javax.swing.JLayeredPane();
         Default_Buttons = new javax.swing.JLayeredPane();
-        Button_Hide = new javax.swing.JToggleButton();
-        Button_Transcript = new javax.swing.JToggleButton();
-        Button_Exit = new javax.swing.JToggleButton();
         Button_Continue = new javax.swing.JButton();
-        Button_CloseTranscript = new javax.swing.JToggleButton();
+        Button_Transcript = new javax.swing.JButton();
+        Button_Hide = new javax.swing.JButton();
+        Button_CloseTranscript = new javax.swing.JButton();
+        Button_Exit = new javax.swing.JButton();
         TranscriptArea_SP = new javax.swing.JScrollPane();
         Transcript_Area = new javax.swing.JTextPane();
         NarrationArea_SP = new javax.swing.JScrollPane();
@@ -93,69 +95,7 @@ public class GUI extends javax.swing.JFrame {
         Layers.setMaximumSize(new java.awt.Dimension(1600, 900));
         Layers.setMinimumSize(new java.awt.Dimension(1152, 648));
 
-        Button_Hide.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
-        Button_Hide.setForeground(new java.awt.Color(204, 204, 204));
-        Button_Hide.setText("HIDE");
-        Button_Hide.setToolTipText(null);
-        Button_Hide.setBorder(null);
-        Button_Hide.setBorderPainted(false);
-        Button_Hide.setContentAreaFilled(false);
-        Button_Hide.setFocusPainted(false);
-        Button_Hide.setFocusable(false);
-        Button_Hide.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_Hide.setRequestFocusEnabled(false);
-        Button_Hide.setVerifyInputWhenFocusTarget(false);
-        Button_Hide.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button_HideActionPerformed(evt);
-            }
-        });
-        Default_Buttons.setLayer(Button_Hide, 2);
-        Default_Buttons.add(Button_Hide);
-        Button_Hide.setBounds(20, 20, 90, 40);
-
-        Button_Transcript.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
-        Button_Transcript.setForeground(new java.awt.Color(204, 204, 204));
-        Button_Transcript.setText("TRANSCRIPT");
-        Button_Transcript.setToolTipText(null);
-        Button_Transcript.setBorder(null);
-        Button_Transcript.setBorderPainted(false);
-        Button_Transcript.setContentAreaFilled(false);
-        Button_Transcript.setFocusPainted(false);
-        Button_Transcript.setFocusable(false);
-        Button_Transcript.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_Transcript.setRequestFocusEnabled(false);
-        Button_Transcript.setVerifyInputWhenFocusTarget(false);
-        Button_Transcript.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button_TranscriptActionPerformed(evt);
-            }
-        });
-        Default_Buttons.setLayer(Button_Transcript, 2);
-        Default_Buttons.add(Button_Transcript);
-        Button_Transcript.setBounds(130, 20, 180, 40);
-
-        Button_Exit.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
-        Button_Exit.setForeground(new java.awt.Color(204, 204, 204));
-        Button_Exit.setText("EXIT");
-        Button_Exit.setToolTipText(null);
-        Button_Exit.setBorder(null);
-        Button_Exit.setBorderPainted(false);
-        Button_Exit.setContentAreaFilled(false);
-        Button_Exit.setFocusPainted(false);
-        Button_Exit.setFocusable(false);
-        Button_Exit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_Exit.setRequestFocusEnabled(false);
-        Button_Exit.setVerifyInputWhenFocusTarget(false);
-        Button_Exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button_ExitActionPerformed(evt);
-            }
-        });
-        Default_Buttons.setLayer(Button_Exit, 2);
-        Default_Buttons.add(Button_Exit);
-        Button_Exit.setBounds(1039, 20, 90, 40);
-
+        Button_Continue.setBorder(null);
         Button_Continue.setBorderPainted(false);
         Button_Continue.setContentAreaFilled(false);
         Button_Continue.addActionListener(new java.awt.event.ActionListener() {
@@ -167,18 +107,43 @@ public class GUI extends javax.swing.JFrame {
         Default_Buttons.add(Button_Continue);
         Button_Continue.setBounds(0, 0, 1152, 648);
 
+        Button_Transcript.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
+        Button_Transcript.setForeground(new java.awt.Color(204, 204, 204));
+        Button_Transcript.setText("TRANSCRIPT");
+        Button_Transcript.setToolTipText("");
+        Button_Transcript.setBorder(null);
+        Button_Transcript.setContentAreaFilled(false);
+        Button_Transcript.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Button_Transcript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_TranscriptActionPerformed(evt);
+            }
+        });
+        Default_Buttons.setLayer(Button_Transcript, 2);
+        Default_Buttons.add(Button_Transcript);
+        Button_Transcript.setBounds(130, 20, 180, 40);
+
+        Button_Hide.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
+        Button_Hide.setForeground(new java.awt.Color(204, 204, 204));
+        Button_Hide.setText("HIDE");
+        Button_Hide.setBorder(null);
+        Button_Hide.setContentAreaFilled(false);
+        Button_Hide.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Button_Hide.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_HideActionPerformed(evt);
+            }
+        });
+        Default_Buttons.setLayer(Button_Hide, 2);
+        Default_Buttons.add(Button_Hide);
+        Button_Hide.setBounds(20, 20, 90, 40);
+
         Button_CloseTranscript.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
         Button_CloseTranscript.setForeground(new java.awt.Color(204, 204, 204));
         Button_CloseTranscript.setText("BACK");
-        Button_CloseTranscript.setToolTipText(null);
         Button_CloseTranscript.setBorder(null);
-        Button_CloseTranscript.setBorderPainted(false);
         Button_CloseTranscript.setContentAreaFilled(false);
-        Button_CloseTranscript.setFocusPainted(false);
-        Button_CloseTranscript.setFocusable(false);
         Button_CloseTranscript.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_CloseTranscript.setRequestFocusEnabled(false);
-        Button_CloseTranscript.setVerifyInputWhenFocusTarget(false);
         Button_CloseTranscript.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_CloseTranscriptActionPerformed(evt);
@@ -187,6 +152,21 @@ public class GUI extends javax.swing.JFrame {
         Default_Buttons.setLayer(Button_CloseTranscript, 2);
         Default_Buttons.add(Button_CloseTranscript);
         Button_CloseTranscript.setBounds(20, 20, 90, 40);
+
+        Button_Exit.setFont(new java.awt.Font("Nirmala UI", 0, 26)); // NOI18N
+        Button_Exit.setForeground(new java.awt.Color(204, 204, 204));
+        Button_Exit.setText("EXIT");
+        Button_Exit.setBorder(null);
+        Button_Exit.setContentAreaFilled(false);
+        Button_Exit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Button_Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_ExitActionPerformed(evt);
+            }
+        });
+        Default_Buttons.setLayer(Button_Exit, 2);
+        Default_Buttons.add(Button_Exit);
+        Button_Exit.setBounds(1040, 20, 90, 40);
 
         Layers.setLayer(Default_Buttons, 11);
         Layers.add(Default_Buttons);
@@ -336,8 +316,9 @@ public class GUI extends javax.swing.JFrame {
     private void Button_ContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ContinueActionPerformed
         
         if (!isOver) {
-            if (!Button_Transcript.isVisible()) return;
             if (!Button_Hide.isVisible()) {
+                if (Button_CloseTranscript.isVisible()) return;
+                
                 // Show components
                 Button_Exit.setVisible(true);
                 Button_Hide.setVisible(true);
@@ -368,28 +349,6 @@ public class GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Button_ContinueActionPerformed
 
-    private void Button_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ExitActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_Button_ExitActionPerformed
-
-    private void Button_HideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_HideActionPerformed
-        if (currentState != null) {
-            // Hide components
-            Button_Exit.setVisible(false);
-            Button_Hide.setVisible(false);
-            Button_Transcript.setVisible(false);
-
-            NarrationArea_SP.setVisible(false);
-            Mask_Narration.setVisible(false);
-
-            Actor_Area.setVisible(false);
-            TextArea_SP.setVisible(false);
-
-            Mask_Top.setVisible(false);
-            Mask_Bottom.setVisible(false);
-        }
-    }//GEN-LAST:event_Button_HideActionPerformed
-
     private void Button_TranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TranscriptActionPerformed
         if (currentState != null) {
             Transcript_Area.setText(currentState.getPastText());
@@ -411,6 +370,24 @@ public class GUI extends javax.swing.JFrame {
             // Mask_Transcript.setVisible(true);
         }
     }//GEN-LAST:event_Button_TranscriptActionPerformed
+
+    private void Button_HideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_HideActionPerformed
+        if (currentState != null) {
+            // Hide components
+            Button_Exit.setVisible(false);
+            Button_Hide.setVisible(false);
+            Button_Transcript.setVisible(false);
+
+            NarrationArea_SP.setVisible(false);
+            Mask_Narration.setVisible(false);
+
+            Actor_Area.setVisible(false);
+            TextArea_SP.setVisible(false);
+
+            Mask_Top.setVisible(false);
+            Mask_Bottom.setVisible(false);
+        }
+    }//GEN-LAST:event_Button_HideActionPerformed
 
     private void Button_CloseTranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_CloseTranscriptActionPerformed
         // Hide components
@@ -435,9 +412,14 @@ public class GUI extends javax.swing.JFrame {
         TextArea_SP.setVisible(true);
     }//GEN-LAST:event_Button_CloseTranscriptActionPerformed
 
+    private void Button_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ExitActionPerformed
+        this.dispose();
+        System.exit(0);
+    }//GEN-LAST:event_Button_ExitActionPerformed
+
     private void initComponents_MANUALY_GOD_DAMNIT_NETBEANS(Novel ln) {
         setLocationRelativeTo(null);
-
+        
         TextArea_SP.getViewport().setOpaque(false);
         TextArea_SP.setViewportBorder(null);
         Text_Area.setBackground(new Color(0, 0, 0, 0));
@@ -527,7 +509,7 @@ public class GUI extends javax.swing.JFrame {
             Characters.setVisible(true);
             setBackground();
         }
-
+        
         // System.out.println(currentState.getActor().getName() + ": " + currentState.getText());
     }
 
@@ -804,7 +786,7 @@ public class GUI extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+        /*try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -819,7 +801,8 @@ public class GUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }*/
+        FlatLightLaf.setup();
         //</editor-fold>
 
         /* Create and display the form */
@@ -834,11 +817,11 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel Actor_Area;
     private javax.swing.JLabel Background;
     private javax.swing.JPanel BlackOrWhite;
-    private javax.swing.JToggleButton Button_CloseTranscript;
+    private javax.swing.JButton Button_CloseTranscript;
     private javax.swing.JButton Button_Continue;
-    private javax.swing.JToggleButton Button_Exit;
-    private javax.swing.JToggleButton Button_Hide;
-    private javax.swing.JToggleButton Button_Transcript;
+    private javax.swing.JButton Button_Exit;
+    private javax.swing.JButton Button_Hide;
+    private javax.swing.JButton Button_Transcript;
     private javax.swing.JLabel Characters;
     private javax.swing.JLayeredPane Default_Buttons;
     private javax.swing.JLayeredPane Layers;

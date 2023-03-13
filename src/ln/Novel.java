@@ -24,6 +24,8 @@ public class Novel {
     protected String illust;
     protected File start;
     
+    protected File save;
+    
     protected ArrayList<Character> charas;
 
     public Novel(File dir) {

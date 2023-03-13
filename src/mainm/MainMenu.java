@@ -4,7 +4,14 @@
  */
 package mainm;
 
+import com.formdev.flatlaf.FlatLightLaf;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import ln.Novel;
@@ -16,16 +23,20 @@ import reader.Reader;
  */
 public class MainMenu extends javax.swing.JFrame {
 
-    File lnDir;
-    String playerName = "player";
+    private File lnDir;
+    private Novel ln;
     
-    Boolean textFieldHasPlaceholder = true;
+    private String playerName = "Player";
+    private Boolean textFieldHasPlaceholder = true;
+    
+    private File config;
     
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
         initComponents();
+        loadConfig();
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -78,7 +89,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         Title_Ver.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         Title_Ver.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Title_Ver.setText("ver. 1.1");
+        Title_Ver.setText("ver. 1.2");
         Title_Ver.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         Title_Ver.setMaximumSize(new java.awt.Dimension(100, 50));
         Title_Ver.setMinimumSize(new java.awt.Dimension(100, 50));
@@ -143,13 +154,21 @@ public class MainMenu extends javax.swing.JFrame {
         Menu_PlayerName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Menu_PlayerName.setForeground(new java.awt.Color(102, 102, 102));
         Menu_PlayerName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Menu_PlayerName.setText("player");
+        Menu_PlayerName.setText("Player");
 
         Menu_PlayerNameBox.setText("Enter name");
         Menu_PlayerNameBox.setAutoscrolls(false);
         Menu_PlayerNameBox.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 Menu_PlayerNameBoxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Menu_PlayerNameBoxFocusLost(evt);
+            }
+        });
+        Menu_PlayerNameBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Menu_PlayerNameBoxKeyPressed(evt);
             }
         });
 
@@ -174,17 +193,18 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(MenuLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(MenuLayout.createSequentialGroup()
-                        .addComponent(Menu_PlayerNameLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(Menu_PlayerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(Menu_SelectedLN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(MenuLayout.createSequentialGroup()
                         .addComponent(Menu_Play, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(Menu_Open, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(MenuLayout.createSequentialGroup()
-                        .addComponent(Menu_PlayerNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(MenuLayout.createSequentialGroup()
+                                .addComponent(Menu_PlayerNameLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(Menu_PlayerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(Menu_PlayerNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(Menu_SaveName, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -212,7 +232,7 @@ public class MainMenu extends javax.swing.JFrame {
                     .addComponent(Menu_SaveName))
                 .addGap(24, 24, 24)
                 .addComponent(Menu_Exit)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,6 +272,7 @@ public class MainMenu extends javax.swing.JFrame {
             if(!Menu_SelectedLN.getText().equals("Open a Visual Novel")) {
                 
                 lnDir = fileChooser.getSelectedFile();
+                ln = new Novel(lnDir);
                 Menu_Play.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Not a valid Visual Novel directory.");
@@ -260,30 +281,89 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_Menu_OpenActionPerformed
 
     private void Menu_PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_PlayActionPerformed
-        System.out.println("Starting: " + lnDir.getAbsolutePath());
-
+        System.out.println("Writing config: " + config.getAbsolutePath());
+        saveConfig(playerName);
+        
+        System.out.println("Starting: " + ln.getDirectory().getAbsolutePath());
         this.dispose();
 
-        var lnReader = new Reader(lnDir, playerName);
+        var lnReader = new Reader(ln, playerName);
     }//GEN-LAST:event_Menu_PlayActionPerformed
 
     private void Menu_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_ExitActionPerformed
         this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_Menu_ExitActionPerformed
 
     private void Menu_SaveNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_SaveNameActionPerformed
-        playerName = Menu_PlayerNameBox.getText();
-        Menu_PlayerName.setText(playerName);
+        if(!textFieldHasPlaceholder) {
+            playerName = Menu_PlayerNameBox.getText();
+            Menu_PlayerName.setText(playerName);
+        }
     }//GEN-LAST:event_Menu_SaveNameActionPerformed
 
     private void Menu_PlayerNameBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Menu_PlayerNameBoxFocusGained
         if (textFieldHasPlaceholder) {
             Menu_PlayerNameBox.setText("");
-            textFieldHasPlaceholder = false;
-            //Menu_PlayerNameBox.setForeground(new Color(187, 187, 187));
         }
     }//GEN-LAST:event_Menu_PlayerNameBoxFocusGained
 
+    private void Menu_PlayerNameBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Menu_PlayerNameBoxFocusLost
+        if (textFieldHasPlaceholder) {
+            Menu_PlayerNameBox.setText("Enter name");
+        }
+    }//GEN-LAST:event_Menu_PlayerNameBoxFocusLost
+
+    private void Menu_PlayerNameBoxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Menu_PlayerNameBoxKeyPressed
+        textFieldHasPlaceholder = Menu_PlayerNameBox.getText().isEmpty();
+    }//GEN-LAST:event_Menu_PlayerNameBoxKeyPressed
+
+    /**
+     * Loads the config file
+     * @return says if the config was found successfully and loaded
+     */
+    private void loadConfig() {
+        String configDir = System.getProperty("user.home");
+        
+        switch (System.getProperty("os.name")) {
+            case "Windows"  -> configDir += "/AppData/Roaming/VNReader";
+            case "Linux"    -> configDir += "/.config/VNReader";
+            default         -> configDir += "/.config/VNReader";
+        }
+        
+        config = new File(configDir + "/user");
+        
+        if (config.isFile()) {
+            try {
+                var bread = new BufferedReader(new FileReader(config));
+                playerName = bread.readLine();
+                Menu_PlayerName.setText(playerName);
+                Menu_PlayerNameBox.setText(playerName);
+                textFieldHasPlaceholder = false;
+            
+            } catch (IOException e) {
+                System.out.println("ERROR: " + config.getAbsolutePath() + "can't be read!");
+            }
+        } else {
+            System.out.println("No config found");
+        }
+    }
+    
+    private void saveConfig(String pName) {
+        BufferedWriter bwrit;
+        
+        try {
+            bwrit = new BufferedWriter(new FileWriter(config, false));
+            bwrit.write(pName);
+            bwrit.close();
+            
+        } catch (IOException e) {
+            String error = "ERROR: Can't write to file " + config.getAbsolutePath();
+            System.out.println(error);
+            JOptionPane.showMessageDialog(null, error);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -293,7 +373,7 @@ public class MainMenu extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+        /*try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -308,7 +388,8 @@ public class MainMenu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }*/
+        FlatLightLaf.setup();
         //</editor-fold>
         //</editor-fold>
         
