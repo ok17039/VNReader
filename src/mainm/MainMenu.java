@@ -12,8 +12,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.text.DateFormatter;
 import ln.Novel;
 import reader.Reader;
 
@@ -26,15 +28,22 @@ public class MainMenu extends javax.swing.JFrame {
     private File lnDir;
     private Novel ln;
     
-    private String playerName = "Player";
-    private Boolean textFieldHasPlaceholder = true;
+    private String playerName;
+    private Boolean textFieldHasPlaceholder;
     
-    private File config;
+    private File configFile;
+    private File saveFile;
+    
+    private Boolean loadedSave;
     
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
+        playerName = "Player";
+        textFieldHasPlaceholder = true;
+        loadedSave = false;
+        
         initComponents();
         loadConfig();
         setLocationRelativeTo(null);
@@ -89,7 +98,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         Title_Ver.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         Title_Ver.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Title_Ver.setText("ver. 1.2");
+        Title_Ver.setText("ver. 1.3");
         Title_Ver.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         Title_Ver.setMaximumSize(new java.awt.Dimension(100, 50));
         Title_Ver.setMinimumSize(new java.awt.Dimension(100, 50));
@@ -273,6 +282,7 @@ public class MainMenu extends javax.swing.JFrame {
                 
                 lnDir = fileChooser.getSelectedFile();
                 ln = new Novel(lnDir);
+                checkSave();
                 Menu_Play.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Not a valid Visual Novel directory.");
@@ -281,13 +291,13 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_Menu_OpenActionPerformed
 
     private void Menu_PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_PlayActionPerformed
-        System.out.println("Writing config: " + config.getAbsolutePath());
+        System.out.println("Writing config: " + configFile.getAbsolutePath());
         saveConfig(playerName);
         
         System.out.println("Starting: " + ln.getDirectory().getAbsolutePath());
         this.dispose();
 
-        var lnReader = new Reader(ln, playerName);
+        var lnReader = new Reader(ln, playerName, saveFile);
     }//GEN-LAST:event_Menu_PlayActionPerformed
 
     private void Menu_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_ExitActionPerformed
@@ -331,18 +341,18 @@ public class MainMenu extends javax.swing.JFrame {
             default         -> configDir += "/.config/VNReader";
         }
         
-        config = new File(configDir + "/user");
+        configFile = new File(configDir + "/user");
         
-        if (config.isFile()) {
+        if (configFile.isFile()) {
             try {
-                var bread = new BufferedReader(new FileReader(config));
+                var bread = new BufferedReader(new FileReader(configFile));
                 playerName = bread.readLine();
                 Menu_PlayerName.setText(playerName);
                 Menu_PlayerNameBox.setText(playerName);
                 textFieldHasPlaceholder = false;
             
             } catch (IOException e) {
-                System.out.println("ERROR: " + config.getAbsolutePath() + "can't be read!");
+                System.out.println("ERROR: " + configFile.getAbsolutePath() + "can't be read!");
             }
         } else {
             System.out.println("No config found");
@@ -353,14 +363,49 @@ public class MainMenu extends javax.swing.JFrame {
         BufferedWriter bwrit;
         
         try {
-            bwrit = new BufferedWriter(new FileWriter(config, false));
+            bwrit = new BufferedWriter(new FileWriter(configFile, false));
             bwrit.write(pName);
             bwrit.close();
             
         } catch (IOException e) {
-            String error = "ERROR: Can't write to file " + config.getAbsolutePath();
+            String error = "ERROR: Can't write to file " + configFile.getAbsolutePath();
             System.out.println(error);
             JOptionPane.showMessageDialog(null, error);
+        }
+    }
+    
+    private void checkSave() {
+        String checksum = Novel.getChecksum(lnDir);
+        
+        System.out.println(checksum);
+        
+        String saveDirPath = System.getProperty("user.home");
+        
+        switch (System.getProperty("os.name")) {
+            case "Windows"  -> saveDirPath += "/AppData/Roaming/VNReader/saves/";
+            case "Linux"    -> saveDirPath += "/.vnreader/";
+            default         -> saveDirPath += "/.vnreader/";
+        }
+        
+        var saveDir = new File(saveDirPath + checksum);
+        
+        if (saveDir.isDirectory()) {
+            var latest = new File(saveDirPath + ln.getTitle().replace(' ', '-') + '_' + java.time.LocalTime.now().toString().replace(':', '-'));
+            // 
+            latest.setLastModified(0);
+            
+            for (File save : saveDir.listFiles()) {
+                if (save.lastModified() >= latest.lastModified())
+                    latest = save;
+            }
+            
+            saveFile = latest;
+            Menu_Play.setText("Continue");
+            
+        } else {
+            saveFile = new File(saveDirPath + ln.getTitle().replace(' ', '-') + '_' + java.time.LocalTime.now().toString().replace(':', '-'));
+            Menu_Play.setText("Play");
+            System.out.println("No saves found");
         }
     }
     
@@ -418,4 +463,5 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JSeparator Title_Line;
     private javax.swing.JLabel Title_Ver;
     // End of variables declaration//GEN-END:variables
+
 }

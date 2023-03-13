@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.UIManager;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -35,14 +34,16 @@ public class GUI extends javax.swing.JFrame {
     private State currentState;
     private String lastBckg;
 
-    boolean isOver;
+    private boolean isOver;
+    private boolean isDuringIntro;
+    private boolean isDuringCredits;
+    
 
     /**
      * Creates new form GUI
      */
     public GUI(Reader lnReader, Novel ln, State currentState) {
         this.lnReader = lnReader;
-        isOver = false;
 
         initComponents();
         initComponents_MANUALY_GOD_DAMNIT_NETBEANS(ln);
@@ -50,6 +51,8 @@ public class GUI extends javax.swing.JFrame {
         this.setVisible(true);
 
         this.currentState = currentState;
+        
+        isOver = false;
     }
 
     /**
@@ -314,39 +317,49 @@ public class GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_ContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ContinueActionPerformed
-        
-        if (!isOver) {
-            if (!Button_Hide.isVisible()) {
-                if (Button_CloseTranscript.isVisible()) return;
-                
-                // Show components
-                Button_Exit.setVisible(true);
-                Button_Hide.setVisible(true);
-                Button_Transcript.setVisible(true);
 
-                Mask_Top.setVisible(true);
-                
-                if (currentState.isDuringNarration()) {
-                    NarrationArea_SP.setVisible(true);
-                    Mask_Narration.setVisible(true);
-                    
-                } else {
-                    Mask_Bottom.setVisible(true);
-                }
-
-                Actor_Area.setVisible(true);
-                TextArea_SP.setVisible(true);
-
-            } else {
-                if (currentState != null) {
-                    cleanup();
-                }
-                lnReader.progress();
-            }
-        } else {
+        if (isOver) {
             this.dispose();
             new MainMenu();
+            return;
         }
+        
+        if (currentState.isDuringIntro()) {
+            currentState.setDuringIntro(false);
+            update();
+            return;
+        }
+        
+        if (!Button_Hide.isVisible()) {     // If the UI is hidden, show the components
+            if (Button_CloseTranscript.isVisible()) {   // If the transcript is open, do nothing
+                return;
+            }
+
+            // Show components
+            Button_Exit.setVisible(true);
+            Button_Hide.setVisible(true);
+            Button_Transcript.setVisible(true);
+
+            Mask_Top.setVisible(true);
+
+            if (currentState.isDuringNarration()) {
+                NarrationArea_SP.setVisible(true);
+                Mask_Narration.setVisible(true);
+
+            } else {
+                Mask_Bottom.setVisible(true);
+            }
+
+            Actor_Area.setVisible(true);
+            TextArea_SP.setVisible(true);
+
+        } else {        // If the UI is shown and transcript not open, progress
+            if (currentState != null) {
+                cleanup();
+            }
+            lnReader.progress();
+        }
+
     }//GEN-LAST:event_Button_ContinueActionPerformed
 
     private void Button_TranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TranscriptActionPerformed
@@ -413,6 +426,8 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_CloseTranscriptActionPerformed
 
     private void Button_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ExitActionPerformed
+        System.out.println("Line: " + currentState.getCurrentLine());
+        lnReader.createSave();
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_Button_ExitActionPerformed
@@ -482,6 +497,10 @@ public class GUI extends javax.swing.JFrame {
 
     public void update() {
 
+        if (currentState.isDuringIntro()) {
+            return;
+        }
+        
         setup();
 
         drawScene();

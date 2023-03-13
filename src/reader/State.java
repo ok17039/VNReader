@@ -15,44 +15,62 @@ import ln.Character;
  */
 public class State {
     
-    protected String background;
-    protected String image;
+    private String  background;
+    private String  image;
     
-    protected ArrayList<Character> scene;
-    protected Character actor;
-    protected String peekingChar;
+    private ArrayList<Character>    scene;
+    private Character               actor;
+    private String                  peekingChar;
             
-    protected String text;
-    protected String pastText;
+    private String  text;
+    private String  pastText;
+    private int     currentLine;
     
-    protected String playerName;
+    private String  playerName;
     
-    protected Chapter chapter;
-    protected String lnDir;
-    protected String chPath;
-    protected String nextChDir;
+    private Chapter chapter;
+    private String  lnDir;
+    private String  chPath;
+    private String  nextChDir;
     
-    protected boolean duringSolo;
-    protected boolean duringNarration;
-    protected boolean duringImage;
+    private boolean duringSolo;
+    private boolean duringNarration;
+    private boolean duringImage;
     
-    protected boolean reachedNovelEnd;
-    protected boolean reachedChapterEnd;
+    private boolean duringIntro;
+    private boolean duringCredits;
+    
+    private boolean reachedNovelEnd;
+    private boolean reachedChapterEnd;
 
     public State(Chapter chapt, String lnDir, String playerName) {
         background = "black";
+        
         scene = new ArrayList<>();
         peekingChar = null;
-        duringSolo = false;
+        
+        this.playerName = playerName;
+        
         this.chapter = chapt;
         this.lnDir = lnDir;
-        this.playerName = playerName;
+        
+        duringSolo = false;
+        duringNarration = false;
+        duringImage = false;
+        
+        duringIntro = true;
+        duringCredits = false;
+        
         reachedNovelEnd = false;
         reachedChapterEnd = false;
     }
 
 
     // Getters
+    public String getBackgroundName() {
+        return background;
+    }
+    
     public String getBackground() {
         String bgPath = lnDir + "/res/bg/" + chapter.getName() + '/' + background;
         
@@ -65,6 +83,10 @@ public class State {
         }
     }
 
+    public String getImageName() {
+        return image;
+    }
+    
     public String getImage() {
         String imgPath = lnDir + "/res/img/" + chapter.getName() + '/' + image;
         
@@ -103,6 +125,10 @@ public class State {
         return pastText;
     }
     
+    public int getCurrentLine() {
+        return currentLine;
+    }
+    
 
     public String getPlayerName() {
         return playerName;
@@ -137,6 +163,15 @@ public class State {
 
     public boolean isDuringImage() {
         return duringImage;
+    }
+    
+    
+    public boolean isDuringIntro() {
+        return duringIntro;
+    }
+    
+    public boolean isDuringCredits() {
+        return duringCredits;
     }
 
     
@@ -211,6 +246,10 @@ public class State {
         }
         this.text = text;
     }
+    
+    public void redALine() {
+        currentLine++;
+    }
 
     
     public void setReachedNovelEnd() {
@@ -238,5 +277,13 @@ public class State {
         this.duringImage = duringImage;
     }
     
+    
+    public void setDuringIntro(boolean duringIntro) {
+        this.duringIntro = duringIntro;
+    }
+    
+    public void setDuringCredits(boolean duringCredits) {
+        this.duringCredits = duringCredits;
+    }
     
 }
