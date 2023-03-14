@@ -120,9 +120,10 @@ public class Reader {
         
         String checksum = Novel.getChecksum(ln.getDirectory());
         String saveDirPath = System.getProperty("user.home");
+        String osName = System.getProperty("os.name");
         
-        switch (System.getProperty("os.name")) {
-            case "Windows"  -> saveDirPath += "/AppData/Roaming/VNReader/saves/";
+        switch (osName.substring(0, osName.indexOf(' '))) {
+            case "Windows"  -> saveDirPath += "/Documents/VNReader/saves/";
             case "Linux"    -> saveDirPath += "/.vnreader/";
             default         -> saveDirPath += "/.vnreader/";
         }
