@@ -345,6 +345,7 @@ public class MainMenu extends javax.swing.JFrame {
         
         // System.out.println('"' + configDir + '"');
         
+        new File(configDir).mkdirs();
         configFile = new File(configDir + "/user");
         
         if (configFile.isFile()) {
@@ -385,8 +386,11 @@ public class MainMenu extends javax.swing.JFrame {
         
         String saveDirPath = System.getProperty("user.home");
         String osName = System.getProperty("os.name");
-        
-        switch (osName.substring(0, osName.indexOf(' '))) {
+        if (osName.contains(" ")) {
+            osName = osName.substring(0, osName.indexOf(' '));
+        }
+            
+        switch (osName) {
             case "Windows"  -> saveDirPath += "/Documents/VNReader/saves/";
             case "Linux"    -> saveDirPath += "/.vnreader/";
             default         -> saveDirPath += "/.vnreader/";

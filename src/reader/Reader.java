@@ -121,14 +121,20 @@ public class Reader {
         String checksum = Novel.getChecksum(ln.getDirectory());
         String saveDirPath = System.getProperty("user.home");
         String osName = System.getProperty("os.name");
-        
-        switch (osName.substring(0, osName.indexOf(' '))) {
+        if (osName.contains(" ")) {
+            osName = osName.substring(0, osName.indexOf(' '));
+        }
+            
+        switch (osName) {
             case "Windows"  -> saveDirPath += "/Documents/VNReader/saves/";
             case "Linux"    -> saveDirPath += "/.vnreader/";
             default         -> saveDirPath += "/.vnreader/";
         }
         
-        saveDirPath += checksum + "/"
+        saveDirPath += checksum;
+        new File(saveDirPath).mkdirs();
+        
+        saveDirPath += "/"
                 + ln.getTitle()
                         .replace(' ', '-') + '_'
                 + java.time.LocalTime.now()
