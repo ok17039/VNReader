@@ -126,7 +126,7 @@ public class Reader {
         }
             
         switch (osName) {
-            case "Windows"  -> saveDirPath += "/Documents/VNReader/saves/";
+            case "Windows"  -> saveDirPath += "/AppData/Roaming/VNReader/saves/";
             case "Linux"    -> saveDirPath += "/.vnreader/";
             default         -> saveDirPath += "/.vnreader/";
         }
