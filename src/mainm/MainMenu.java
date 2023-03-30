@@ -338,7 +338,7 @@ public class MainMenu extends javax.swing.JFrame {
         // System.out.println(osName);
         
         switch (osName.substring(0, osName.indexOf(' '))) {
-            case "Windows"  -> configDir += "/Documents/VNReader";
+            case "Windows"  -> configDir += "/AppData/Roaming/VNReader";
             case "Linux"    -> configDir += "/.config/VNReader";
             default         -> configDir += "/.config/VNReader";
         }
@@ -391,7 +391,7 @@ public class MainMenu extends javax.swing.JFrame {
         }
             
         switch (osName) {
-            case "Windows"  -> saveDirPath += "/Documents/VNReader/saves/";
+            case "Windows"  -> saveDirPath += "/AppData/Roaming/VNReader/saves/";
             case "Linux"    -> saveDirPath += "/.vnreader/";
             default         -> saveDirPath += "/.vnreader/";
         }
